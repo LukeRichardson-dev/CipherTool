@@ -4,8 +4,24 @@ class Context:
     def key(self):
         ...
 
-class Layer:
+class VerticalLayer:
 
-    def apply(self, text, context):
+    def __init__(self, context):
 
-        return text, context
+        self.context = context
+
+    def apply(self, text):
+
+        return text
+
+class HorizontalLayer:
+
+    def __init__(self, context):
+
+        self.context = context
+
+    def apply(self, char):
+
+        return char
+
+  

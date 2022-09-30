@@ -1,12 +1,4 @@
-from models.layer import Context, Layer
-
-def inv_mod(a, m):
-
-    for b in range(m):
-
-        res = a * b % m
-        if res == 1:
-            return b
+from models.layer import VerticalLayer
 
 class AffineKeyContext:
 
@@ -17,16 +9,25 @@ class AffineKeyContext:
     def key(self):
         return self.a, self.b
 
-class Affine(Layer):
+class Affine(VerticalLayer):
+
+    @staticmethod
+    def inv_mod(a, m):
+  
+        for b in range(m):
+    
+            res = a * b % m
+            if res == 1:
+                return b
 
     @staticmethod
     def shift(char, a, b):
         x = ord(char.upper()) - 65
 
-        return chr(((x - b) * inv_mod(a, 26)) % 26 + 65)
+        return chr(((x - b) * Affine.inv_mod(a, 26)) % 26 + 65)
 
-    def apply(self, text, context: Context):
-        a, b = context.key
+    def apply(self, text):
+        a, b = self.context.key
 
         new = ""
         for char in text:
@@ -38,4 +39,4 @@ class Affine(Layer):
                 
             new += char
 
-        return new, context
+        return new
