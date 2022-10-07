@@ -46,7 +46,7 @@ class Wordlist:
         return Wordlist(
             self.path,
             ordered=self.ordered,
-            _operations = self._operations.copy() + operations,
+            _operations = self._operations.copy() + [*operations],
             _filters = self._filters.copy(),
         )
 
